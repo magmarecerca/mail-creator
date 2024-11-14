@@ -135,15 +135,17 @@ footer {
     margin: 0 auto;
     background-color: #fff;
     border-bottom: 1px solid #e8e8e8;
-    display: flex;
 }
 
 #editor-wrapper {
+    width: 100%;
     border-right: 8px solid #eee;
 }
 
 #preview-wrapper {
-    padding: 8px 0 8px 8px;
+    padding: 8px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .column {
@@ -157,7 +159,6 @@ footer {
 
 #preview.column {
     white-space: normal;
-    max-width: 800px;
 }
 
 .preview-template {

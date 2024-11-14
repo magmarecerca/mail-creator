@@ -4,11 +4,12 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="content-language" content="en">
     <meta name="description" content="This is the online markdown editor with live preview.">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/github-markdown-light.css">
     <link rel="stylesheet" type="text/css" href="css/email-style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="css/flex.css">
 
     <script type="text/javascript" src="js/marked.min.js"></script>
     <script type="text/javascript" src="js/purify.min.js"></script>
@@ -16,6 +17,7 @@
     <script type="text/javascript" src="js/ace/mode-markdown.js"></script>
     <script type="text/javascript" src="js/storehouse.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/window.js"></script>
 
     <script src="https://kit.fontawesome.com/28575038bf.js" crossorigin="anonymous"></script>
 
@@ -39,21 +41,22 @@
         </div>
     </div>
 </header>
-
-<div id="container">
-    <div id="edit" class="column">
+<flex class="h" id="container">
+    <flex-item id="edit" class="column" style="flex: 1;">
         <div id="editor-wrapper">
             <div id="editor"></div>
         </div>
-    </div>
-    <div id="preview" class="column">
+    </flex-item>
+    <flex-resizer><div></div></flex-resizer>
+    <flex-item id="preview" class="column" style="flex: 1;">
         <div id="preview-wrapper">
             <div class="email-container">
                 <table class="header" width="100%" cellpadding="0" cellspacing="0" border="0"
                        style="background-color: whitesmoke; border-bottom: 2px solid #222222; padding: 0 20px;">
                     <tr>
                         <td>
-                            <img src="https://magmarecerca.org/static/images/front/mini_logo.png" alt="MAGMA Logo"
+                            <img src="https://magmarecerca.org/static/images/front/mini_logo.png"
+                                 alt="MAGMA Logo"
                                  style="display: block; max-width: 100%; height: auto;"/>
                         </td>
                     </tr>
@@ -63,7 +66,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </flex-item>
+</flex>
+
 </body>
 </html>
