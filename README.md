@@ -1,6 +1,6 @@
 # Mail Creator
 
-[Mail Creator](https://magmarecerca.github.io/markdown-creator/) is a tiny web tool to quickly write HTML emails using Markdown formatted text.
+[Mail Creator](https://magmarecerca.github.io/mail-creator/) is a tiny web tool to quickly write HTML emails using Markdown formatted text.
 
 This is a fork from [tanabe/markdown-live-editor](https://github.com/tanabe/markdown-live-preview)
 
