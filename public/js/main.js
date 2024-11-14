@@ -1,81 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
     let hasEdited = false;
-    let scrollBarSync = false;
 
     const localStorageNamespace = 'com.markdownlivepreview';
     const localStorageKey = 'last_state';
-    const localStorageScrollBarKey = 'scroll_bar_settings';
     const confirmationMessage = 'Are you sure you want to reset? Your changes will be lost.';
 
-    // default template
-    const defaultInput = `# Markdown syntax guide
+    function stringIsNullOrEmpty(string){
+        if (typeof string === "string" && string.length === 0 )
+            return true;
+        if (string === null)
+            return true;
 
-## Headers
+        return false;
+    }
 
-# This is a Heading h1
-## This is a Heading h2
-###### This is a Heading h6
-
-## Emphasis
-
-*This text will be italic*  
-_This will also be italic_
-
-**This text will be bold**  
-__This will also be bold__
-
-_You **can** combine them_
-
-## Lists
-
-### Unordered
-
-* Item 1
-* Item 2
-* Item 2a
-* Item 2b
-
-### Ordered
-
-1. Item 1
-2. Item 2
-3. Item 3
-    1. Item 3a
-    2. Item 3b
-
-## Images
-
-![This is an alt text.](/image/sample.webp "This is a sample image.")
-
-## Links
-
-You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
-
-## Blockquotes
-
-> Markdown is a lightweight markup language with plain-text-formatting syntax, created in 2004 by John Gruber with Aaron Swartz.
->
->> Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.
-
-## Tables
-
-| Left columns  | Right columns |
-| ------------- |:-------------:|
-| left foo      | right foo     |
-| left bar      | right bar     |
-| left baz      | right baz     |
-
-## Blocks of code
-
-${"`"}${"`"}${"`"}
-let message = 'Hello world';
-alert(message);
-${"`"}${"`"}${"`"}
-
-## Inline code
-
-This web site is using ${"`"}markedjs/marked${"`"}.
-`;
+    const templateFile = 'template.md';
+    let defaultInput = '';
+    fetch(templateFile)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Could not fetch ${templateFile}: ${response.statusText}`);
+            }
+            return response.text();
+        })
+        .then(markdown => {
+            defaultInput = markdown;
+            if(stringIsNullOrEmpty(editor.getValue())){
+                presetValue(defaultInput);
+            }
+        });
 
     let setupEditor = () => {
         let editor = ace.edit('editor');
@@ -140,37 +93,23 @@ This web site is using ${"`"}markedjs/marked${"`"}.
 
     // ----- sync scroll position -----
 
-    let initScrollBarSync = (settings) => {
-        let checkbox = document.querySelector('#sync-scroll-checkbox');
-        checkbox.checked = settings;
-        scrollBarSync = settings;
+    document.querySelector('#edit').addEventListener('scroll', (event) => {
+        let editorElement = event.currentTarget;
+        let ratio = editorElement.scrollTop / (editorElement.scrollHeight - editorElement.clientHeight);
 
-        checkbox.addEventListener('change', (event) => {
-            let checked = event.currentTarget.checked;
-            scrollBarSync = checked;
-            saveScrollBarSettings(checked);
-        });
+        let previewElement = document.querySelector('#preview');
+        let targetY = (previewElement.scrollHeight - previewElement.clientHeight) * ratio;
+        previewElement.scrollTo(0, targetY);
+    });
 
-        document.querySelector('#edit').addEventListener('scroll', (event) => {
-            if (!scrollBarSync) {
-                return;
-            }
-            let editorElement = event.currentTarget;
-            let ratio = editorElement.scrollTop / (editorElement.scrollHeight - editorElement.clientHeight);
+    document.querySelector('#preview').addEventListener('scroll', (event) => {
+        let previewElement = event.currentTarget;
+        let ratio = previewElement.scrollTop / (previewElement.scrollHeight - previewElement.clientHeight);
 
-            let previewElement = document.querySelector('#preview');
-            let targetY = (previewElement.scrollHeight - previewElement.clientHeight) * ratio;
-            previewElement.scrollTo(0, targetY);
-        });
-    };
-
-    let enableScrollBarSync = () => {
-        scrollBarSync = true;
-    };
-
-    let disableScrollBarSync = () => {
-        scrollBarSync = false;
-    };
+        let editorElement = document.querySelector('#edit');
+        let targetY = (editorElement.scrollHeight - editorElement.clientHeight) * ratio;
+        editorElement.scrollTo(0, targetY);
+    });
 
     // ----- clipboard utils -----
 
@@ -209,11 +148,11 @@ This web site is using ${"`"}markedjs/marked${"`"}.
             event.preventDefault();
             let value = editor.getValue();
             copyToClipboard(value, () => {
-                notifyCopied();
-            },
-            () => {
-                // nothing to do
-            });
+                    notifyCopied();
+                },
+                () => {
+                    // nothing to do
+                });
         });
     };
 
@@ -229,16 +168,6 @@ This web site is using ${"`"}markedjs/marked${"`"}.
         Storehouse.setItem(localStorageNamespace, localStorageKey, content, expiredAt);
     };
 
-    let loadScrollBarSettings = () => {
-        let lastContent = Storehouse.getItem(localStorageNamespace, localStorageScrollBarKey);
-        return lastContent;
-    };
-
-    let saveScrollBarSettings = (settings) => {
-        let expiredAt = new Date(2099, 1, 1);
-        Storehouse.setItem(localStorageNamespace, localStorageScrollBarKey, settings, expiredAt);
-    };
-
 
     // ----- entry point -----
 
@@ -251,7 +180,4 @@ This web site is using ${"`"}markedjs/marked${"`"}.
     }
     setupResetButton();
     setupCopyButton(editor);
-
-    let scrollBarSettings = loadScrollBarSettings() || false;
-    initScrollBarSync(scrollBarSettings);
 });
