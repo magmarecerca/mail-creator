@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     let hasEdited = false;
+    let editor = null;
 
     const localStorageNamespace = 'com.markdownlivepreview';
     const localStorageKey = 'last_state';
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fontSize: 14,
             autoScrollEditorIntoView: true,
             theme: 'ace/theme/chrome',
+            fontFamily: 'JetBrains Mono'
         });
 
         var MarkdownMode = ace.require("ace/mode/markdown").Mode;
@@ -153,9 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let addGoogleDriveImage = () => {
         document.querySelector("#add-image-button").addEventListener('click', (event) => {
-            let imageUrl = prompt("Please type the google drive image URL");
+            let imageUrl = prompt("Please type the Google Drive image URL");
             if (imageUrl !== null) {
-                console.log(getIdFromUrl(imageUrl));
+                let id = getIdFromUrl(imageUrl)[0];
+                let url = `https://drive.google.com/thumbnail?id=${id}`
+                editor.session.insert(editor.getCursorPosition(), `![Image](${url})`);
             }
         });
     }
@@ -199,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----- entry point -----
 
     let lastContent = loadLastContent();
-    let editor = setupEditor();
+    editor = setupEditor();
     if (lastContent) {
         presetValue(lastContent);
     } else {
