@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let imageUrl = prompt("Please type the Google Drive image URL");
             if (imageUrl !== null) {
                 let id = getIdFromUrl(imageUrl)[0];
-                let url = `https://drive.google.com/thumbnail?id=${id}`
+                let url = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
                 editor.session.insert(editor.getCursorPosition(), `![Image](${url})`);
             }
         });
