@@ -147,6 +147,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000)
     };
 
+    // ----- drive -----
+
+    function getIdFromUrl(url) { return url.match(/[-\w]{25,}/); }
+
+    let addGoogleDriveImage = () => {
+        document.querySelector("#add-image-button").addEventListener('click', (event) => {
+            let imageUrl = prompt("Please type the google drive image URL");
+            if (imageUrl !== null) {
+                console.log(getIdFromUrl(imageUrl));
+            }
+        });
+    }
+
     // ----- setup -----
 
     // setup navigation actions
@@ -194,4 +207,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setupResetButton();
     setupCopyButton(editor);
+    addGoogleDriveImage()
 });
