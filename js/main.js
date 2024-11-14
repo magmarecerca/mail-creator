@@ -154,12 +154,23 @@ document.addEventListener("DOMContentLoaded", () => {
     function getIdFromUrl(url) { return url.match(/[-\w]{25,}/); }
 
     let addGoogleDriveImage = () => {
-        document.querySelector("#add-image-button").addEventListener('click', (event) => {
+        document.querySelector("#add-image-button").addEventListener('click', () => {
             let imageUrl = prompt("Please type the Google Drive image URL");
             if (imageUrl !== null) {
                 let id = getIdFromUrl(imageUrl)[0];
                 let url = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
                 editor.session.insert(editor.getCursorPosition(), `![Image](${url})`);
+            }
+        });
+    }
+
+    let addGoogleDriveFile = () => {
+        document.querySelector("#add-file-button").addEventListener('click', () => {
+            let fileUrl = prompt("Please type the Google Drive file URL");
+            if (fileUrl !== null) {
+                let id = getIdFromUrl(fileUrl)[0];
+                let url = `https://drive.google.com/uc?export=download&id=${id}`
+                editor.session.insert(editor.getCursorPosition(), `[<button> [Button Name] </button>](${url})`);
             }
         });
     }
@@ -212,4 +223,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupResetButton();
     setupCopyButton(editor);
     addGoogleDriveImage()
+    addGoogleDriveFile()
 });
