@@ -78,6 +78,7 @@ header a:hover {
 
 #menu-items {
     display: flex;
+    font-size: 1.2em;
 }
 
 #reset-button {
