@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=JetBrains%20Mono');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 html, body {
     color: #333;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    font-family: Helvetica, arial, freesans, clean, sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1em;
     line-height: 1.5em;
     background-color: #fff;
@@ -42,30 +42,37 @@ img {
 }
 
 header {
-    background-color: #444;
+    background-color: #960000;
     font-size: 12px;
     color: #fff;
     width: 100%;
-}
+    padding: 8px 12px;
 
-header .first-row,
-header .second-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 16px;
-    width: 100%;
+    flex-direction: column;
+    gap: 8px;
 }
 
-header .tool-items {
-    width: 50%;
-}
-
-header button {
+.tool-items button {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2em;
     color: white;
     border: none;
     background: none;
     cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.tool-items button:hover {
+    background-color: #00000020;
+}
+
+header > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 header a:link, header a:hover, header a:visited, header a:active {
@@ -81,11 +88,7 @@ header a:hover {
     font-size: 1.2em;
 }
 
-#reset-button {
-    margin-left: 16px;
-}
-
-#copy-button {
+#menu-items .button {
     margin-left: 16px;
 }
 
@@ -97,14 +100,7 @@ header a:hover {
     user-select: none;
 }
 
-header input[type="checkbox"] {
-    vertical-align: middle;
-    margin-right: 4px;
-    margin-top: 0px;
-}
-
 #github {
-    padding-right: 32px;
 }
 
 #github img {
@@ -118,15 +114,17 @@ header input[type="checkbox"] {
 }
 
 footer {
-    padding: 8px;
+    padding: 8px 12px;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #fff;
+    background-color: #960000;
     color: #fff;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+}
+
+footer a {
+    color: #fff !important;
+    text-decoration: underline !important;
 }
 
 #container {
@@ -136,22 +134,20 @@ footer {
     margin: 0 auto;
     background-color: #fff;
     border-bottom: 1px solid #e8e8e8;
+    display: flex;
 }
 
 #editor-wrapper {
-    width: 100%;
     border-right: 8px solid #eee;
 }
 
 #preview-wrapper {
     padding: 8px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .column {
     overflow-y: scroll;
-    flex: 1;
+    flex-basis: 50%;
     padding: 0;
     margin: 0;
     white-space: nowrap;
@@ -162,7 +158,21 @@ footer {
     white-space: normal;
 }
 
-.preview-template {
-    padding: 10px;
-    background-color: red;
+#divider {
+    width: 5px;
+    background-color: #ccc;
+    cursor: ew-resize;
+}
+
+.code-copy-button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 fill=%22none%22 stroke=%22DarkSlateGray%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 class=%22feather feather-copy%22 viewBox=%220 0 24 24%22%3E%3Crect x=%229%22 y=%229%22 width=%2213%22 height=%2213%22 rx=%222%22 ry=%222%22%3E%3C/rect%3E%3Cpath d=%22M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1%22%3E%3C/path%3E%3C/svg%3E');
+    background-size: cover;
 }

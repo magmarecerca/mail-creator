@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/github-markdown-light.css">
     <link rel="stylesheet" type="text/css" href="css/email-style.css">
-    <link rel="stylesheet" type="text/css" href="css/flex.css">
 
     <script type="text/javascript" src="js/marked.min.js"></script>
     <script type="text/javascript" src="js/purify.min.js"></script>
@@ -17,7 +16,6 @@
     <script type="text/javascript" src="js/ace/mode-markdown.js"></script>
     <script type="text/javascript" src="js/storehouse.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="js/window.js"></script>
 
     <script src="https://kit.fontawesome.com/28575038bf.js" crossorigin="anonymous"></script>
 
@@ -28,8 +26,10 @@
     <div class="first-row">
         <div id="menu-items">
             <div style="font-weight: bolder;">Mail Creator</div>
-            <div id="reset-button"><a href="#">Reset</a></div>
-            <div id="copy-button"><a href="#">Copy</a></div>
+            <div class="button" id="reset-button"><a href="#">Reset</a></div>
+            <div class="button" id="copy-button"><a href="#">Copy</a></div>
+            <div class="button" id="load-button"><a href="#">Load MD</a></div>
+            <div class="button" id="save-button"><a href="#">Save MD</a></div>
         </div>
         <div id="github"><a href="https://github.com/magmarecerca/mail-creator"><img
                 src="image/GitHub-Mark-Light-32px.webp"></a></div>
@@ -41,14 +41,15 @@
         </div>
     </div>
 </header>
-<flex class="h" id="container">
-    <flex-item id="edit" class="column" style="flex: 1;">
+
+<div id="container">
+    <div id="edit" class="column">
         <div id="editor-wrapper">
             <div id="editor"></div>
         </div>
-    </flex-item>
-    <flex-resizer><div></div></flex-resizer>
-    <flex-item id="preview" class="column" style="flex: 1;">
+    </div>
+    <div id="divider"></div>
+    <div id="preview" class="column">
         <div id="preview-wrapper">
             <div class="email-container">
                 <table class="header" width="100%" cellpadding="0" cellspacing="0" border="0"
@@ -66,8 +67,12 @@
                 </div>
             </div>
         </div>
-    </flex-item>
-</flex>
+    </div>
+</div>
 
+<footer>
+    Tool released under the <a href="https://github.com/magmarecerca/mail-creator/blob/main/LICENSE" target="_blank">MIT License</a>.
+    See <a href="https://dev.magmarecerca.org/" target="_blank">MAGMA's Open Source Commitment</a>.
+</footer>
 </body>
 </html>
