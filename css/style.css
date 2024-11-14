@@ -148,7 +148,7 @@ footer {
 
 .column {
     overflow-y: scroll;
-    flex-basis: 50%;
+    flex: 1;
     padding: 0;
     margin: 0;
     white-space: nowrap;
@@ -157,4 +157,10 @@ footer {
 
 #preview.column {
     white-space: normal;
+    max-width: 800px;
+}
+
+.preview-template {
+    padding: 10px;
+    background-color: red;
 }
