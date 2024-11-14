@@ -93,23 +93,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ----- sync scroll position -----
 
-    document.querySelector('#edit').addEventListener('scroll', (event) => {
-        let editorElement = event.currentTarget;
-        let ratio = editorElement.scrollTop / (editorElement.scrollHeight - editorElement.clientHeight);
+    function syncScrolling(reference, target){
+        let ratio = reference.scrollTop / (reference.scrollHeight - reference.clientHeight);
+        let targetY = (target.scrollHeight - target.clientHeight) * ratio;
+        target.scrollTo(0, targetY);
+    }
 
-        let previewElement = document.querySelector('#preview');
-        let targetY = (previewElement.scrollHeight - previewElement.clientHeight) * ratio;
-        previewElement.scrollTo(0, targetY);
-    });
+    function scrollEditor(event){
+        const preview = document.querySelector('#preview');
+        preview.removeEventListener('scroll', scrollPreview);
 
-    document.querySelector('#preview').addEventListener('scroll', (event) => {
-        let previewElement = event.currentTarget;
-        let ratio = previewElement.scrollTop / (previewElement.scrollHeight - previewElement.clientHeight);
+        syncScrolling(event.currentTarget, preview);
 
-        let editorElement = document.querySelector('#edit');
-        let targetY = (editorElement.scrollHeight - editorElement.clientHeight) * ratio;
-        editorElement.scrollTo(0, targetY);
-    });
+        setTimeout(() => {
+            preview.addEventListener('scroll', scrollPreview);
+        }, 0);
+    }
+
+    function scrollPreview(event){
+        const editor = document.querySelector('#edit');
+        editor.removeEventListener('scroll', scrollEditor);
+
+        syncScrolling(event.currentTarget, editor);
+
+        setTimeout(() => {
+            editor.addEventListener('scroll', scrollEditor);
+        }, 0);
+    }
+
+    document.querySelector('#edit').addEventListener('scroll', scrollEditor);
+
+    document.querySelector('#preview').addEventListener('scroll', scrollPreview);
 
     // ----- clipboard utils -----
 
