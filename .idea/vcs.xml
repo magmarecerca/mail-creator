@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/DOMPurify" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/Storehouse-js" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/ace-builds" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/github-markdown-css" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/marked" vcs="Git" />
+  </component>
+</project>
