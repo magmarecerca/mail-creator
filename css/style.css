@@ -133,10 +133,6 @@ footer a {
     border-right: 8px solid #eee;
 }
 
-#preview-wrapper {
-    padding: 8px;
-}
-
 .column {
     overflow-y: scroll;
     flex-basis: 50%;
@@ -146,8 +142,9 @@ footer a {
     vertical-align: top;
 }
 
-#preview.column {
+#preview {
     white-space: normal;
+    border: none;
 }
 
 #divider {

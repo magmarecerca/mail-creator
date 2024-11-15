@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 hasEdited = true;
             }
             let value = editor.getValue();
-            convert(value);
             saveLastContent(value);
         });
 
@@ -65,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
             headerIds: false,
             mangle: false
         };
-        let html = marked.parse(markdown, options);
-        let sanitized = DOMPurify.sanitize(html);
-        document.querySelector('#output').innerHTML = sanitized;
+        return marked.parse(markdown, options);
     };
 
     // Reset input text
@@ -308,22 +305,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let placeTemplate = async function(template) {
-        const wrapper = document.getElementById('preview-wrapper');
-
-        const contentCode = `                
-                <div class="content">
-                    <div id="output" class="content markdown-body"></div>
-                </div>`;
+        const wrapper = document.getElementById('preview');
 
         const engine = new liquidjs.Liquid();
 
-        const data = {
-            content: contentCode
-        };
-
         try {
-            wrapper.innerHTML = await engine.parseAndRender(template, data);
-            convert(ace.edit('editor').getValue())
+            const data = {
+                content: convert(ace.edit('editor').getValue())
+            };
+
+            let htmlContent = await engine.parseAndRender(template, data);
+
+            const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(htmlContent);
+            iframeDoc.close();
         } catch (e) {
             console.error(e);
         }
