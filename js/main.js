@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    let placeTemplate = async function(template) {
+    let placeTemplate = async function (template) {
         const wrapper = document.getElementById('preview');
 
         try {
@@ -387,6 +387,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ----- export button ----
+
+    let setupExportButton = () => {
+        const exportButton = document.getElementById('export-mail');
+        const iframe = document.getElementById('preview');
+
+        function minifyHTML(html) {
+            return html
+                .replace(/<!--[\s\S]*?-->/g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/>\s</g, '><')
+                .trim();
+        }
+
+        exportButton.addEventListener('click', (e) => {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            const iframeHtml = minifyHTML(iframeDoc.documentElement.outerHTML);
+
+            const blob = new Blob([iframeHtml], {type: 'text/html'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'iframe-content.html';
+
+            link.click();
+        });
+    }
 
     // ----- entry point -----
 
@@ -403,6 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSaveButton();
     setupDividerResize();
     setupTemplateLoad();
+    setupExportButton();
 
     addGoogleDriveImage()
     addGoogleDriveFile()
