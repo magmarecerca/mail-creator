@@ -2,11 +2,14 @@
 
 ## Headers
 
-# This is a Heading h1
-## This is a Heading h2
-###### This is a Heading h6
+# A first-level heading
+## A second-level heading
+### A third-level heading
+#### A fourth-level heading
+##### A fifth-level heading
+###### A sixth-level heading
 
-## Emphasis
+## Styling text
 
 *This text will be italic*  
 _This will also be italic_
@@ -15,6 +18,15 @@ _This will also be italic_
 __This will also be bold__
 
 _You **can** combine them_
+
+~This text will have a strikethrough~\
+~~This will also have a strikethrough~~
+
+This text is a <sup>superscript</sup>
+
+This text is a <sub>subscript</sub>
+
+<ins>This text has an underline</ins>
 
 ## Lists
 
@@ -33,9 +45,14 @@ _You **can** combine them_
     1. Item 3a
     2. Item 3b
 
+### Task lists
+
+- [ ] This task isn't completed
+- [x] This task is completed
+
 ## Images
 
-![This is an alt text.](image/sample.webp "This is a sample image.")
+![This is an alt text.](image/sample.webp "This is the image's title.")
 
 ## Links
 
@@ -47,13 +64,21 @@ You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
 >
 >> Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.
 
+## Separators
+
+You can have one line here
+
+---
+
+And another after the separator
+
 ## Tables
 
-| Left columns | Right columns |
-|--------------|:-------------:|
-| left foo     |   right foo   |
-| left bar     |   right bar   |
-| left baz     |   right baz   |
+| Left aligned | Center aligned | Right aligned |
+|:-------------|:--------------:|--------------:|
+| left foo     |   center foo   |     right foo |
+| left bar     |   center bar   |     right bar |
+| left baz     |   center baz   |     right baz |
 
 ## Blocks of code
 
