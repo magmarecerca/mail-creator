@@ -308,25 +308,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let placeTemplate = async function(template) {
         const wrapper = document.getElementById('preview');
 
-        const engine = new liquidjs.Liquid();
-
         try {
-            const contentCode = `                
-                <div class="content">
-                    <div id="output" class="content markdown-body">
-                        ${convert(ace.edit('editor').getValue())}
-                    </div>
-                </div>`;
-            const data = {
-                content: contentCode,
-            };
-
-            let htmlContent = await engine.parseAndRender(template, data);
-
             const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
             iframeDoc.open();
-            iframeDoc.write(htmlContent);
+            iframeDoc.write(template);
             iframeDoc.close();
+            editContent(ace.edit('editor').getValue())
         } catch (e) {
             console.error(e);
         }
