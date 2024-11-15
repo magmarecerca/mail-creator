@@ -303,6 +303,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             reader.readAsText(file);
         }
+
+        const defaultTemplate = 'default-template.html';
+        fetch(defaultTemplate)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Could not fetch ${defaultTemplate}: ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                placeTemplate(html);
+            });
     }
 
     let placeTemplate = async function(template) {
