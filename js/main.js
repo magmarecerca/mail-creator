@@ -59,6 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return editor;
     };
 
+    const renderer = new marked.Renderer();
+    let setupMarked = () => {
+        renderer.link = function (href, title, text) {
+            return `<a target="_blank" href="${href}">${text}` + '</a>';
+        }
+        marked.use({ renderer });
+    };
+
     // Render Markdown text as html
     let convert = (markdown) => {
         let options = {
@@ -446,6 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ----- entry point -----
 
+    setupMarked();
     let lastContent = loadLastContent();
     editor = setupEditor();
     if (lastContent) {
