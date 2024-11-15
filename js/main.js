@@ -344,6 +344,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!iframeDoc || !iframeDoc.body || !iframeDoc.body.childNodes.length)
             return;
 
+        let style = wrapper.contentWindow.document.createElement("style");
+        const defaultTemplate = 'css/github-markdown-light.min.css';
+        fetch(defaultTemplate)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Could not fetch ${defaultTemplate}: ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(css => {
+                style.innerHTML = css;
+            });
+        wrapper.contentWindow.document.head.appendChild(style);
+
         wrapper.contentWindow.document.getElementById('output').innerHTML = convert(value);
     }
 
