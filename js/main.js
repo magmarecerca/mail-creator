@@ -299,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
             reader.onload = async function (e) {
                 const contents = e.target.result;
                 await placeTemplate(contents);
+                modal.style.display = "none";
             }
 
             reader.readAsText(file);
