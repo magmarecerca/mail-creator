@@ -58,6 +58,10 @@ This text is a <sub>subscript</sub>
 
 You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
 
+## Buttons
+
+[<button>This button contains a link to our website</button>](https://magmarecerca.org)
+
 ## Blockquotes
 
 > Markdown is a lightweight markup language with plain-text-formatting syntax, created in 2004 by John Gruber with Aaron Swartz.
