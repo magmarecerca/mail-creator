@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
         }
+        loadDefaultTemplate();
         presetValue(defaultInput);
         document.querySelectorAll('.column').forEach((element) => {
             element.scrollTo({top: 0});
@@ -267,6 +268,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ----- load template ----
 
+    let loadDefaultTemplate = () => {
+        const defaultTemplate = 'default-template.html';
+        fetch(defaultTemplate)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Could not fetch ${defaultTemplate}: ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                placeTemplate(html);
+            });
+    }
+
     let setupTemplateLoad = () => {
         const modal = document.getElementById("load-template-modal");
         const btn = document.getElementById("load-template");
@@ -305,17 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
             reader.readAsText(file);
         }
 
-        const defaultTemplate = 'default-template.html';
-        fetch(defaultTemplate)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Could not fetch ${defaultTemplate}: ${response.statusText}`);
-                }
-                return response.text();
-            })
-            .then(html => {
-                placeTemplate(html);
-            });
+        loadDefaultTemplate();
     }
 
     let placeTemplate = async function (template) {
@@ -330,7 +335,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const edit = document.querySelector('#edit');
             const preview = iframeDoc;
-            // edit.removeEventListener('scroll', scrollEditor);
             edit.addEventListener('scroll', scrollEditor);
             preview.addEventListener('scroll', scrollPreview);
         } catch (e) {
