@@ -13,6 +13,7 @@
 
     <script type="text/javascript" src="js/marked.min.js"></script>
     <script type="text/javascript" src="js/purify.min.js"></script>
+    <script type="text/javascript" src="js/liquid.browser.min.js"></script>
     <script type="text/javascript" src="js/ace.js"></script>
     <script type="text/javascript" src="js/mode-markdown.js"></script>
     <script type="text/javascript" src="js/storehouse.js"></script>
@@ -29,8 +30,10 @@
             <div class="button" id="copy-button"><a href="#">Copy</a></div>
             <div class="button" id="load-button"><a href="#">Load MD</a></div>
             <div class="button" id="save-button"><a href="#">Save MD</a></div>
+            <div class="button" id="load-template"><a href="#">Load Template</a></div>
         </div>
-        <div id="github"><a href="https://github.com/magmarecerca/mail-creator" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+        <div id="github"><a href="https://github.com/magmarecerca/mail-creator" target="_blank"><i
+                class="fa-brands fa-github"></i></a></div>
     </div>
     <div class="second-row">
         <div class="tool-items">
@@ -39,6 +42,14 @@
         </div>
     </div>
 </header>
+
+<div id="load-template-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Select a template from your computer...</p>
+        <input type="file" name="template-file" id="template-file" accept=".html, .liquid"/>
+    </div>
+</div>
 
 <div id="container">
     <div id="edit" class="column">
@@ -69,7 +80,8 @@
 </div>
 
 <footer>
-    Tool released under the <a href="https://github.com/magmarecerca/mail-creator/blob/main/LICENSE" target="_blank">MIT License</a>.
+    Tool released under the <a href="https://github.com/magmarecerca/mail-creator/blob/main/LICENSE" target="_blank">MIT
+    License</a>.
     See <a href="https://dev.magmarecerca.org/" target="_blank">MAGMA's Open Source Commitment</a>.
 </footer>
 </body>

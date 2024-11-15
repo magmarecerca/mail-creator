@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const localStorageKey = 'last_state';
     const confirmationMessage = 'Are you sure you want to reset? Your changes will be lost.';
 
-    function stringIsNullOrEmpty(string){
-        if (typeof string === "string" && string.length === 0 )
+    function stringIsNullOrEmpty(string) {
+        if (typeof string === "string" && string.length === 0)
             return true;
         if (string === null)
             return true;
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(markdown => {
             defaultInput = markdown;
-            if(stringIsNullOrEmpty(editor.getValue())){
+            if (stringIsNullOrEmpty(editor.getValue())) {
                 presetValue(defaultInput);
             }
         });
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fontFamily: 'JetBrains Mono'
         });
 
-        var MarkdownMode = ace.require("ace/mode/markdown").Mode;
+        const MarkdownMode = ace.require("ace/mode/markdown").Mode;
         editor.session.setMode(new MarkdownMode());
 
         editor.on('change', () => {
@@ -95,13 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ----- sync scroll position -----
 
-    function syncScrolling(reference, target){
+    function syncScrolling(reference, target) {
         let ratio = reference.scrollTop / (reference.scrollHeight - reference.clientHeight);
         let targetY = (target.scrollHeight - target.clientHeight) * ratio;
         target.scrollTo(0, targetY);
     }
 
-    function scrollEditor(event){
+    function scrollEditor(event) {
         const preview = document.querySelector('#preview');
         preview.removeEventListener('scroll', scrollPreview);
 
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 0);
     }
 
-    function scrollPreview(event){
+    function scrollPreview(event) {
         const editor = document.querySelector('#edit');
         editor.removeEventListener('scroll', scrollEditor);
 
@@ -151,7 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ----- drive -----
 
-    function getIdFromUrl(url) { return url.match(/[-\w]{25,}/); }
+    function getIdFromUrl(url) {
+        return url.match(/[-\w]{25,}/);
+    }
 
     let addGoogleDriveImage = () => {
         document.querySelector("#add-image-button").addEventListener('click', () => {
@@ -251,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let saveMD = () => {
-        const blob = new Blob([editor.getValue()], { type: 'text/plain' });
+        const blob = new Blob([editor.getValue()], {type: 'text/plain'});
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
 
@@ -265,6 +267,68 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.removeChild(link); // Remove the link element after usage
     }
 
+    // ----- load template ----
+
+    let setupTemplateLoad = () => {
+        const modal = document.getElementById("load-template-modal");
+        const btn = document.getElementById("load-template");
+
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        document.querySelector("#load-template-modal input").addEventListener('change', handleTemplate);
+
+        function handleTemplate(event) {
+            const file = event.target.files[0];
+
+            if (!file)
+                return;
+
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                const contents = e.target.result;
+                await placeTemplate(contents);
+            }
+
+            reader.readAsText(file);
+        }
+    }
+
+    let placeTemplate = async function(template) {
+        const wrapper = document.getElementById('preview-wrapper');
+
+        const contentCode = `                
+                <div class="content">
+                    <div id="output" class="content markdown-body"></div>
+                </div>`;
+
+        const engine = new liquidjs.Liquid();
+
+        const data = {
+            content: contentCode
+        };
+
+        try {
+            wrapper.innerHTML = await engine.parseAndRender(template, data);
+            convert(ace.edit('editor').getValue())
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     // ----- divider resize ----
 
     let setupDividerResize = () => {
@@ -276,12 +340,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let isDragging = false;
 
         // Saat user mulai drag
-        divider.addEventListener('mousedown', function(e) {
+        divider.addEventListener('mousedown', function (e) {
             isDragging = true;
             document.body.style.cursor = 'ew-resize';
         });
 
-        document.addEventListener('mousemove', function(e) {
+        document.addEventListener('mousemove', function (e) {
             if (!isDragging) return;
 
             // Dapatkan lebar total container
@@ -296,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
             preview.style.flexBasis = `${newRightWidth}%`;
         });
 
-        document.addEventListener('mouseup', function() {
+        document.addEventListener('mouseup', function () {
             isDragging = false;
             document.body.style.cursor = 'default';
         });
@@ -317,6 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupLoadButton();
     setupSaveButton();
     setupDividerResize();
+    setupTemplateLoad();
 
     addGoogleDriveImage()
     addGoogleDriveFile()
