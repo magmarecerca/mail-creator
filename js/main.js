@@ -356,28 +356,46 @@ document.addEventListener("DOMContentLoaded", () => {
         const divider = document.getElementById('divider');
 
         let isDragging = false;
+        let dividerPosition = 50;
 
-        divider.addEventListener('mousedown', function () {
+        divider.addEventListener('mousedown', function (event) {
             isDragging = true;
             document.body.style.cursor = 'ew-resize';
+            dividerPosition = (event.clientX / container.offsetWidth) * 100;
+            event.preventDefault();
         });
 
-        document.addEventListener('mousemove', function (e) {
+        function clamp(num, min, max) {
+            return num <= min ? min : num >= max ? max : num
+        }
+
+        function moveDivider(event) {
             if (!isDragging) return;
 
-            const containerWidth = container.offsetWidth;
-
-            const newLeftWidth = (e.clientX / containerWidth) * 100;
+            dividerPosition = clamp(dividerPosition + event.movementX / container.offsetWidth * 100, 0, 100);
+            const newLeftWidth = dividerPosition;
             const newRightWidth = 100 - newLeftWidth;
 
             edit.style.flexBasis = `${newLeftWidth}%`;
             preview.style.flexBasis = `${newRightWidth}%`;
-        });
+        }
+
+        document.addEventListener('mousemove', moveDivider);
 
         document.addEventListener('mouseup', function () {
             isDragging = false;
             document.body.style.cursor = 'default';
         });
+
+        const wrapper = document.getElementById('preview');
+        wrapper.onload = function () {
+            const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
+            iframeDoc.addEventListener('mousemove', moveDivider);
+            iframeDoc.addEventListener('mouseup', function () {
+                isDragging = false;
+                document.body.style.cursor = 'default';
+            });
+        }
     }
 
     // ----- export button ----
