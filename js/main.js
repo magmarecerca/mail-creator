@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const blob = new Blob([iframeHtml], {type: 'text/html'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'iframe-content.html';
+            link.download = 'email.html';
 
             link.click();
         });
