@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             let value = editor.getValue();
             saveLastContent(value);
+            editContent(value);
         });
 
         return editor;
@@ -310,8 +311,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const engine = new liquidjs.Liquid();
 
         try {
+            const contentCode = `                
+                <div class="content">
+                    <div id="output" class="content markdown-body">
+                        ${convert(ace.edit('editor').getValue())}
+                    </div>
+                </div>`;
             const data = {
-                content: convert(ace.edit('editor').getValue())
+                content: contentCode,
             };
 
             let htmlContent = await engine.parseAndRender(template, data);
@@ -323,6 +330,16 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (e) {
             console.error(e);
         }
+    }
+
+    let editContent = (value) => {
+        const wrapper = document.getElementById('preview');
+        const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
+
+        if (!iframeDoc || !iframeDoc.body || !iframeDoc.body.childNodes.length)
+            return;
+
+        wrapper.contentWindow.document.getElementById('output').innerHTML = convert(value);
     }
 
     // ----- divider resize ----
