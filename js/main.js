@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let hasEdited = false;
     let editor = null;
 
-    const localStorageNamespace = 'com.markdownlivepreview';
+    const localStorageNamespace = 'org.magmarecerca.dev/mail_creator';
     const localStorageKey = 'last_state';
     const confirmationMessage = 'Are you sure you want to reset? Your changes will be lost.';
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         editor.session.setMode(new MarkdownMode());
 
         editor.on('change', () => {
-            let changed = editor.getValue() != defaultInput;
+            let changed = editor.getValue() !== defaultInput;
             if (changed) {
                 hasEdited = true;
             }
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return editor;
     };
 
-    // Render markdown text as html
+    // Render Markdown text as html
     let convert = (markdown) => {
         let options = {
             headerIds: false,
@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Reset input text
     let reset = () => {
-        let changed = editor.getValue() != defaultInput;
+        let changed = editor.getValue() !== defaultInput;
         if (hasEdited || changed) {
-            var confirmed = window.confirm(confirmationMessage);
+            const confirmed = window.confirm(confirmationMessage);
             if (!confirmed) {
                 return;
             }
@@ -218,8 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----- local state -----
 
     let loadLastContent = () => {
-        let lastContent = Storehouse.getItem(localStorageNamespace, localStorageKey);
-        return lastContent;
+        return Storehouse.getItem(localStorageNamespace, localStorageKey);
     };
 
     let saveLastContent = (content) => {
@@ -234,21 +233,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = '.md';
-        const textarea =
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    presetValue(ev.target.result)
+                    self.currentFileName = file.name; // Update filename
+                };
+                reader.readAsText(file);
+            }
 
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (ev) => {
-                        presetValue(ev.target.result)
-                        currentFileName = file.name; // Update filename
-                    };
-                    reader.readAsText(file);
-                }
-
-                document.body.removeChild(input); // Remove the input element after usage
-            };
+            document.body.removeChild(input); // Remove the input element after usage
+        };
 
         input.click(); // Trigger file input click
     }
@@ -360,8 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let isDragging = false;
 
-        // Saat user mulai drag
-        divider.addEventListener('mousedown', function (e) {
+        divider.addEventListener('mousedown', function () {
             isDragging = true;
             document.body.style.cursor = 'ew-resize';
         });
@@ -369,14 +365,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener('mousemove', function (e) {
             if (!isDragging) return;
 
-            // Dapatkan lebar total container
             const containerWidth = container.offsetWidth;
 
-            // Hitung posisi relatif dari mouse terhadap container
             const newLeftWidth = (e.clientX / containerWidth) * 100;
             const newRightWidth = 100 - newLeftWidth;
 
-            // Update lebar edit dan preview
             edit.style.flexBasis = `${newLeftWidth}%`;
             preview.style.flexBasis = `${newRightWidth}%`;
         });
@@ -401,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .trim();
         }
 
-        exportButton.addEventListener('click', (e) => {
+        exportButton.addEventListener('click', () => {
             const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             const iframeHtml = minifyHTML(iframeDoc.documentElement.outerHTML);
 
