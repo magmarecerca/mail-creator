@@ -99,31 +99,34 @@ document.addEventListener("DOMContentLoaded", () => {
         target.scrollTo(0, targetY);
     }
 
+    let debounceTimeout;
+
     function scrollEditor(event) {
-        const preview = document.querySelector('#preview');
-        preview.removeEventListener('scroll', scrollPreview);
+        const wrapper = document.getElementById('preview');
+        const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
+        const preview = iframeDoc.scrollingElement;
+
+        iframeDoc.removeEventListener('scroll', scrollPreview);
+        clearTimeout(debounceTimeout);
 
         syncScrolling(event.currentTarget, preview);
 
-        setTimeout(() => {
-            preview.addEventListener('scroll', scrollPreview);
-        }, 0);
+        debounceTimeout = setTimeout(() => {
+            iframeDoc.addEventListener('scroll', scrollPreview);
+        }, 100);
     }
 
     function scrollPreview(event) {
         const editor = document.querySelector('#edit');
         editor.removeEventListener('scroll', scrollEditor);
+        clearTimeout(debounceTimeout);
 
-        syncScrolling(event.currentTarget, editor);
+        syncScrolling(event.currentTarget.scrollingElement, editor);
 
-        setTimeout(() => {
+        debounceTimeout = setTimeout(() => {
             editor.addEventListener('scroll', scrollEditor);
-        }, 0);
+        }, 100);
     }
-
-    document.querySelector('#edit').addEventListener('scroll', scrollEditor);
-
-    document.querySelector('#preview').addEventListener('scroll', scrollPreview);
 
     // ----- clipboard utils -----
 
@@ -326,6 +329,12 @@ document.addEventListener("DOMContentLoaded", () => {
             iframeDoc.write(template);
             iframeDoc.close();
             editContent(ace.edit('editor').getValue())
+
+            const edit = document.querySelector('#edit');
+            const preview = iframeDoc;
+            // edit.removeEventListener('scroll', scrollEditor);
+            edit.addEventListener('scroll', scrollEditor);
+            preview.addEventListener('scroll', scrollPreview);
         } catch (e) {
             console.error(e);
         }
