@@ -368,7 +368,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(css => {
                 style.innerHTML += css;
             });
-        // wrapper.contentWindow.document.head.appendChild(style);
 
         wrapper.contentWindow.document.getElementById('output').innerHTML = convert(value);
     }

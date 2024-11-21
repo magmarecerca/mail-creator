@@ -3,15 +3,10 @@
 ## Headers
 
 # A first-level heading
-
 ## A second-level heading
-
 ### A third-level heading
-
 #### A fourth-level heading
-
 ##### A fifth-level heading
-
 ###### A sixth-level heading
 
 ## Styling text
@@ -50,11 +45,6 @@ This text is a <sub>subscript</sub>
     1. Item 3a
     2. Item 3b
 
-### Task lists
-
-- [ ] This task isn't completed
-- [x] This task is completed
-
 ## Images
 
 ![This is an alt text.](image/sample.webp "This is the image's title.")
@@ -65,7 +55,7 @@ You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
 
 ## Buttons
 
-[<button>This button contains a link to our website</button>](https://magmarecerca.org)
+[<button>This button contains a link to this website</button>](https://dev.magmarecerca.org/mail-creator)
 
 ## Blockquotes
 
@@ -80,14 +70,6 @@ You can have one line here
 ---
 
 And another after the separator
-
-## Tables
-
-| Left aligned | Center aligned | Right aligned |
-|:-------------|:--------------:|--------------:|
-| left foo     |   center foo   |     right foo |
-| left bar     |   center bar   |     right bar |
-| left baz     |   center baz   |     right baz |
 
 ## Blocks of code
 
