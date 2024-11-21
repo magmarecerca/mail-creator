@@ -1,19 +1,3 @@
-body {
-    font-family: Helvetica, arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.4em;
-    background-color: white;
-    padding: 10px 25px;
-}
-
-body > *:first-child {
-    margin-top: 0 !important;
-}
-
-body > *:last-child {
-    margin-bottom: 0 !important;
-}
-
 a {
     color: #3973ad;
     text-decoration: none;
@@ -105,31 +89,6 @@ p, blockquote, ul, ol, dl, li, pre {
     margin: 15px 0;
 }
 
-body > h2:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h1:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h1:first-child + h2 {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
-    margin-top: 0;
-    padding-top: 0;
-}
-
 h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
     margin-top: 0;
 }
@@ -182,29 +141,9 @@ dl dt {
     margin: 15px 0 5px;
 }
 
-dl dt:first-child {
-    padding: 0;
-}
-
-dl dt > :first-child {
-    margin-top: 0;
-}
-
-dl dt > :last-child {
-    margin-bottom: 0;
-}
-
 dl dd {
     margin: 0 0 15px;
     padding: 0 15px;
-}
-
-dl dd > :first-child {
-    margin-top: 0;
-}
-
-dl dd > :last-child {
-    margin-bottom: 0;
 }
 
 blockquote {
@@ -212,14 +151,6 @@ blockquote {
     font-style: italic;
     padding: 0 10px;
     color: #333333;
-}
-
-blockquote > :first-child {
-    margin-top: 0;
-}
-
-blockquote > :last-child {
-    margin-bottom: 0;
 }
 
 img {

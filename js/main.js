@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
 
         let style = wrapper.contentWindow.document.querySelector("style");
-        const defaultTemplate = 'css/github-markdown-light.css';
+        const defaultTemplate = 'css/markdown.css';
         fetch(defaultTemplate)
             .then(response => {
                 if (!response.ok) {
