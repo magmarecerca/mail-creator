@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderer.link = function (href, title, text) {
             return `<a target="_blank" href="${href}">${text}` + '</a>';
         }
-        marked.use({ renderer });
+        marked.use({renderer});
     };
 
     // Render Markdown text as html
@@ -165,23 +165,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let addGoogleDriveImage = () => {
-        document.querySelector("#add-image-button").addEventListener('click', () => {
+        function addImage() {
             let imageUrl = prompt("Please type the Google Drive image URL");
             if (imageUrl !== null) {
                 let id = getIdFromUrl(imageUrl)[0];
                 let url = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
                 editor.session.insert(editor.getCursorPosition(), `![Image](${url})`);
             }
+        }
+
+        document.querySelector("#add-image-button").addEventListener('click', addImage);
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && !event.altKey && event.key === 'i') {
+                event.preventDefault();
+                addImage();
+            }
         });
     }
 
     let addGoogleDriveFile = () => {
-        document.querySelector("#add-file-button").addEventListener('click', () => {
+        function addFile() {
             let fileUrl = prompt("Please type the Google Drive file URL");
             if (fileUrl !== null) {
                 let id = getIdFromUrl(fileUrl)[0];
                 let url = `https://drive.google.com/uc?export=download&id=${id}`
                 editor.session.insert(editor.getCursorPosition(), `[<button> [Button Name] </button>](${url})`);
+            }
+        }
+
+        document.querySelector("#add-file-button").addEventListener('click', addFile);
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.altKey && event.key === 'i') {
+                event.preventDefault();
+                addFile();
             }
         });
     }
@@ -194,11 +212,17 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             reset();
         });
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+                event.preventDefault();
+                reset();
+            }
+        });
     };
 
     let setupCopyButton = (editor) => {
-        document.querySelector("#copy-button").addEventListener('click', (event) => {
-            event.preventDefault();
+        function copy() {
             let value = editor.getValue();
             copyToClipboard(value, () => {
                     notifyCopied();
@@ -206,6 +230,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 () => {
                     // nothing to do
                 });
+        }
+
+        document.querySelector("#copy-button").addEventListener('click', (event) => {
+            event.preventDefault();
+            copy();
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.altKey && event.key === 'c') {
+                event.preventDefault();
+                copy();
+            }
         });
     };
 
@@ -214,12 +250,26 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             loadMD();
         });
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'o') {
+                event.preventDefault();
+                loadMD();
+            }
+        });
     };
 
     let setupSaveButton = () => {
         document.querySelector("#save-button").addEventListener('click', (event) => {
             event.preventDefault();
             saveMD();
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+                event.preventDefault();
+                saveMD();
+            }
         });
     };
 
@@ -437,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .trim();
         }
 
-        exportButton.addEventListener('click', () => {
+        function exportEmail() {
             const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             const iframeHtml = minifyHTML(iframeDoc.documentElement.outerHTML);
 
@@ -447,6 +497,15 @@ document.addEventListener("DOMContentLoaded", () => {
             link.download = 'email.html';
 
             link.click();
+        }
+
+        exportButton.addEventListener('click', exportEmail);
+
+        document.addEventListener('keydown', function (event) {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'e') {
+                event.preventDefault();
+                exportEmail();
+            }
         });
     }
 
