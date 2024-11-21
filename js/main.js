@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
             indentedSoftWrap: false,
             fontSize: 14,
             autoScrollEditorIntoView: true,
-            theme: 'ace/theme/chrome',
             fontFamily: 'JetBrains Mono'
         });
 
@@ -357,8 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!iframeDoc || !iframeDoc.body || !iframeDoc.body.childNodes.length)
             return;
 
-        let style = wrapper.contentWindow.document.createElement("style");
-        const defaultTemplate = 'css/github-markdown-light.min.css';
+        let style = wrapper.contentWindow.document.querySelector("style");
+        const defaultTemplate = 'css/github-markdown-light.css';
         fetch(defaultTemplate)
             .then(response => {
                 if (!response.ok) {
@@ -367,9 +366,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.text();
             })
             .then(css => {
-                style.innerHTML = css;
+                style.innerHTML += css;
             });
-        wrapper.contentWindow.document.head.appendChild(style);
+        // wrapper.contentWindow.document.head.appendChild(style);
 
         wrapper.contentWindow.document.getElementById('output').innerHTML = convert(value);
     }
