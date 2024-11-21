@@ -71,13 +71,6 @@ You can have one line here
 
 And another after the separator
 
-## Blocks of code
-
-```js
-let message = 'Hello world';
-alert(message);
-```
-
 ## Inline code
 
 This website is using `markedjs/marked`.
