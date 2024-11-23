@@ -311,24 +311,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let setupTemplateLoad = () => {
         const modal = document.getElementById("load-template-modal");
         const btn = document.getElementById("load-template");
-
-        const span = document.getElementsByClassName("close")[0];
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.html';
 
         btn.onclick = function () {
-            modal.style.display = "block";
+            input.click();
         }
 
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        document.querySelector("#load-template-modal input").addEventListener('change', handleTemplate);
+        input.addEventListener('change', handleTemplate);
 
         function handleTemplate(event) {
             const file = event.target.files[0];
