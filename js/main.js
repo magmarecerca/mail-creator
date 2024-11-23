@@ -527,36 +527,32 @@ document.addEventListener("DOMContentLoaded", () => {
         function getStartStringExclusive() {
             const firstCharacterLine = editor.session.getLine(range.start.row);
             const startString = firstCharacterLine.substring(range.start.column - opening.length, range.start.column);
-            console.log(startString);
             return startString === opening;
         }
 
         function getEndStringExclusive() {
             const lastCharacterLine = editor.session.getLine(range.end.row);
             const closingString = lastCharacterLine.substring(range.end.column, range.end.column + closing.length);
-            console.log(closingString);
             return closingString === closing;
         }
 
         function getStartStringInclusive() {
             const firstCharacterLine = editor.session.getLine(range.start.row);
             const startString = firstCharacterLine.substring(range.start.column, range.start.column + opening.length);
-            console.log(startString);
             return startString === opening;
         }
 
         function getEndStringInclusive() {
             const lastCharacterLine = editor.session.getLine(range.end.row);
             const closingString = lastCharacterLine.substring(range.end.column - closing.length, range.end.column);
-            console.log(closingString);
             return closingString === closing;
         }
 
         if (getStartStringExclusive() && getEndStringExclusive()) {
             deleteCharacterAtPosition(range.end.row, range.end.column, closing.length);
-            deleteCharacterAtPosition(range.start.row, range.start.column - 1, opening.length);
+            deleteCharacterAtPosition(range.start.row, range.start.column - opening.length, opening.length);
         } else if (getStartStringInclusive() && getEndStringInclusive()) {
-            deleteCharacterAtPosition(range.end.row, range.end.column - 1, closing.length);
+            deleteCharacterAtPosition(range.end.row, range.end.column - closing.length, closing.length);
             deleteCharacterAtPosition(range.start.row, range.start.column, opening.length);
         } else {
             editor.session.insert({row: range.end.row, column: range.end.column}, closing);
@@ -569,11 +565,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let setupAddItalicButton = () => {
-        function addItalic() {
+        document.querySelector("#add-italic-button").addEventListener('click', () => {
             addStyle('_', '_')
-        }
+        });
+    }
 
-        document.querySelector("#add-italic-button").addEventListener('click', addItalic);
+    let setupAddBoldButton = () => {
+        document.querySelector("#add-bold-button").addEventListener('click', () => {
+            addStyle('**', '**')
+        });
     }
 
     // ----- entry point -----
@@ -602,4 +602,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddNumberedListButton();
     setupAddQuoteButton();
     setupAddItalicButton();
+    setupAddBoldButton();
 });
