@@ -39,7 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
             indentedSoftWrap: false,
             fontSize: 14,
             autoScrollEditorIntoView: true,
-            fontFamily: 'JetBrains Mono'
+            fontFamily: 'JetBrains Mono',
+            showGutter: false,
+            highlightGutterLine: false,
+            cursorStyle: 'slim',
+            highlightActiveLine: false,
+            highlightSelectedWord: false,
+            showRulers: false,
+            showPrintMargin: false,
+            selectionStyle: 'text',
+            behavioursEnabled: false,
+            enableBasicAutocompletion: false,
+            showFoldWidgets: false,
         });
 
         const MarkdownMode = ace.require("ace/mode/markdown").Mode;
@@ -175,13 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         document.querySelector("#add-image-button").addEventListener('click', addImage);
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && !event.altKey && event.key === 'i') {
-                event.preventDefault();
-                addImage();
-            }
-        });
     }
 
     let addGoogleDriveFile = () => {
@@ -195,13 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         document.querySelector("#add-file-button").addEventListener('click', addFile);
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && event.altKey && event.key === 'i') {
-                event.preventDefault();
-                addFile();
-            }
-        });
     }
 
     // ----- setup -----
@@ -211,13 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#reset-button").addEventListener('click', (event) => {
             event.preventDefault();
             reset();
-        });
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
-                event.preventDefault();
-                reset();
-            }
         });
     };
 
@@ -236,13 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             copy();
         });
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && event.altKey && event.key === 'c') {
-                event.preventDefault();
-                copy();
-            }
-        });
     };
 
     let setupLoadButton = () => {
@@ -250,26 +233,12 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             loadMD();
         });
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && event.key === 'o') {
-                event.preventDefault();
-                loadMD();
-            }
-        });
     };
 
     let setupSaveButton = () => {
         document.querySelector("#save-button").addEventListener('click', (event) => {
             event.preventDefault();
             saveMD();
-        });
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-                event.preventDefault();
-                saveMD();
-            }
         });
     };
 
@@ -500,13 +469,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         exportButton.addEventListener('click', exportEmail);
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && event.key === 'e') {
-                event.preventDefault();
-                exportEmail();
-            }
-        });
     }
 
     // ----- entry point -----

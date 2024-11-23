@@ -22,22 +22,16 @@
 <header>
     <div class="first-row">
         <div id="menu-items">
-            <div style="font-weight: bolder;">Mail Creator</div>
-            <div class="button" id="reset-button" title="Ctrl+R"><a href="#">Reset</a></div>
-            <div class="button" id="copy-button" title="Ctrl+Alt+C"><a href="#">Copy</a></div>
-            <div class="button" id="load-button" title="Ctrl+O"><a href="#">Load MD</a></div>
-            <div class="button" id="save-button" title="Ctrl+S"><a href="#">Save MD</a></div>
-            <div class="button" id="load-template"><a href="#">Load Template</a></div>
-            <div class="button" id="export-mail" title="Ctrl+E"><a href="#">Export Email</a></div>
+            <div class="button" id="load-button"><a href="#"><i class="fa-solid fa-folder-open"></i> Load</a></div>
+            <div class="button" id="save-button"><a href="#"><i class="fa-solid fa-file-arrow-down"></i> Save</a></div>
+            <div class="button" id="reset-button"><a href="#"><i class="fa-solid fa-arrows-rotate"></i> Reset</a></div>
+            <div class="button" id="copy-button"><a href="#"><i class="fa-solid fa-copy"></i> Copy</a></div>
+            <div class="button" id="load-template"><a href="#"><i class="fa-solid fa-palette"></i> Load Template</a></div>
+            <div class="button" id="export-mail"><a href="#"><i class="fa-solid fa-file-export"></i> Export Email</a></div>
         </div>
-        <div id="github"><a href="https://github.com/magmarecerca/mail-creator" target="_blank"><i
-                class="fa-brands fa-github"></i></a></div>
-    </div>
-    <div class="second-row">
-        <div class="tool-items">
-            <button id="add-image-button" title="Ctrl+I"><i class="fa-solid fa-image"></i> Insert image</button>
-            <button id="add-file-button" title="Ctrl+Alt+I"><i class="fa-solid fa-file"></i> Insert file button</button>
-        </div>
+        <div id="github"><a href="https://github.com/magmarecerca/mail-creator" target="_blank">
+            <i class="fa-brands fa-github"></i>
+        </a></div>
     </div>
 </header>
 
@@ -60,9 +54,22 @@
 </div>
 
 <footer>
-    Tool released under the <a href="https://github.com/magmarecerca/mail-creator/blob/main/LICENSE" target="_blank">MIT
-    License</a>.
-    See <a href="https://dev.magmarecerca.org/" target="_blank">MAGMA's Open Source Commitment</a>.
+    <div class="tool-items">
+        <button id="add-heading-button" title="Heading"><i class="fa-solid fa-heading"></i></button>
+        <button id="add-bullet-list-button" title="Bullet List"><i class="fa-solid fa-list-ul"></i></button>
+        <button id="add-number-list-button" title="Numbered List"><i class="fa-solid fa-list-ol"></i></button>
+        <button id="add-quote-button" title="Blockquote"><i class="fa-solid fa-quote-left"></i></button>
+        <button id="add-italic-button" title="Italic"><i class="fa-solid fa-italic"></i></button>
+        <button id="add-bold-button" title="Bold"><i class="fa-solid fa-bold"></i></button>
+        <button id="add-strike-button" title="Strike"><i class="fa-solid fa-strikethrough"></i></button>
+        <button id="add-underline-button" title="Underline"><i class="fa-solid fa-underline"></i></button>
+        <button id="add-link-button" title="Link"><i class="fa-solid fa-link"></i></button>
+        <button id="add-image-button" title="Image"><i class="fa-solid fa-image"></i></button>
+        <button id="add-file-button" title="File"><i class="fa-solid fa-file"></i></button>
+    </div>
+    <div class="info">
+        <button id="documentation-button" title="Guide"><i class="fa-solid fa-book"></i></button>
+    </div>
 </footer>
 </body>
 </html>

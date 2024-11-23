@@ -47,7 +47,7 @@ img {
 }
 
 header {
-    background-color: #960000;
+    background-color: #3B4757;
     font-size: 12px;
     color: #fff;
     width: 100%;
@@ -58,18 +58,21 @@ header {
     gap: 8px;
 }
 
-.tool-items button {
+.tool-items button,
+.info button {
     font-family: "Montserrat", sans-serif;
     font-size: 1.2em;
     color: white;
     border: none;
     background: none;
     cursor: pointer;
-    padding: 5px;
     border-radius: 5px;
+    width: 40px;
+    height: 30px;
 }
 
-.tool-items button:hover {
+.tool-items button:hover,
+.info button:hover {
     background-color: #00000020;
 }
 
@@ -94,7 +97,24 @@ header a:hover {
 }
 
 #menu-items .button {
-    margin-left: 16px;
+    margin-right: 5px;
+}
+
+.button {
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    padding: 0 7px;
+}
+
+.button a:hover {
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #343e4c;
 }
 
 #sync-button {
@@ -115,8 +135,14 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #960000;
+    background-color: #3B4757;
     color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ace_editor .ace_marker-layer .ace_bracket {
+    display: none
 }
 
 footer a {
@@ -134,10 +160,6 @@ footer a {
     display: flex;
 }
 
-#editor-wrapper {
-    border-right: 8px solid #eee;
-}
-
 .column {
     overflow-y: scroll;
     flex-basis: 50%;
@@ -147,6 +169,15 @@ footer a {
     vertical-align: top;
 }
 
+#editor {
+    background-color: #F9FAFB;
+}
+
+#editor-wrapper {
+    height: 100%;
+    background-color: #f9fafb;
+}
+
 #preview {
     white-space: normal;
     border: none;
@@ -154,7 +185,7 @@ footer a {
 
 #divider {
     width: 5px;
-    background-color: #ccc;
+    background-color: #D1D5DB;
     cursor: ew-resize;
 }
 

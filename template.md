@@ -14,19 +14,11 @@
 *This text will be italic*  
 _This will also be italic_
 
-**This text will be bold**  
-__This will also be bold__
+~This text will have a strikethrough~
 
-_You **can** combine them_
+<u>This text has an underline</u>
 
-~This text will have a strikethrough~\
-~~This will also have a strikethrough~~
-
-This text is a <sup>superscript</sup>
-
-This text is a <sub>subscript</sub>
-
-<ins>This text has an underline</ins>
+_You **can** <u>combine ~them~</u>_.
 
 ## Lists
 
@@ -70,7 +62,3 @@ You can have one line here
 ---
 
 And another after the separator
-
-## Inline code
-
-This website is using `markedjs/marked`.
