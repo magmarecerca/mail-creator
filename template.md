@@ -3,10 +3,15 @@
 ## Headers
 
 # A first-level heading
+
 ## A second-level heading
+
 ### A third-level heading
+
 #### A fourth-level heading
+
 ##### A fifth-level heading
+
 ###### A sixth-level heading
 
 ## Styling text
@@ -24,10 +29,10 @@ _You **can** <u>combine ~them~</u>_.
 
 ### Unordered
 
-* Item 1
-* Item 2
-    * Item 2a
-    * Item 2b
+- Item 1
+- Item 2
+    - Item 2a
+    - Item 2b
 
 ### Ordered
 
