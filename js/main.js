@@ -588,6 +588,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    let setupAddSeparatorButton = () => {
+        function addSeparator() {
+            let position = {row: editor.getCursorPosition().row, column: 0};
+            editor.session.insert(position, '---\n');
+        }
+
+        document.querySelector("#add-separator-button").addEventListener('click', addSeparator);
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -617,4 +626,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddBoldButton();
     setupAddStrikeButton();
     setupAddUnderlineButton();
+    setupAddSeparatorButton();
 });
