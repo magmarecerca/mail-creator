@@ -163,9 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let notifyCopied = () => {
         let labelElement = document.querySelector("#copy-button a");
-        labelElement.innerHTML = "Copied!";
+        labelElement.innerHTML = "<i class=\"fa-solid fa-copy\"></i> Copied!";
         setTimeout(() => {
-            labelElement.innerHTML = "Copy";
+            labelElement.innerHTML = "<i class=\"fa-solid fa-copy\"></i> Copy";
         }, 1000)
     };
 
