@@ -516,6 +516,42 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#add-quote-button").addEventListener('click', addQuote);
     }
 
+    function deleteCharacterAtPosition(row, column) {
+        let range = new ace.Range(row, column, row, column + 1);
+        editor.session.getDocument().remove(range);
+    }
+
+    function addStyle(opening, closing){
+        let range = editor.selection.getRange();
+
+        let lastCharacter = editor.session.getLine(range.end.row).charAt(range.end.column);
+        let beforeLastCharacter = editor.session.getLine(range.end.row).charAt(range.end.column - 1);
+        let firstCharacter = editor.session.getLine(range.start.row).charAt(range.start.column - 1);
+        let secondCharacter = editor.session.getLine(range.start.row).charAt(range.start.column);
+
+        if (lastCharacter === opening && firstCharacter === closing) {
+            deleteCharacterAtPosition(range.end.row, range.end.column);
+            deleteCharacterAtPosition(range.start.row, range.start.column - 1);
+        }else if (beforeLastCharacter === opening && secondCharacter === closing) {
+            deleteCharacterAtPosition(range.end.row, range.end.column - 1);
+            deleteCharacterAtPosition(range.start.row, range.start.column);
+        }else{
+            editor.session.insert({row: range.end.row, column: range.end.column}, closing);
+            editor.session.insert({row: range.start.row, column: range.start.column}, opening);
+            editor.selection.setRange(
+                {start: {row: range.start.row, column: range.start.column}, end: {row: range.end.row, column: range.end.column + 2}}
+            )
+        }
+    }
+
+    let setupAddItalicButton = () => {
+        function addItalic() {
+            addStyle('_', '_')
+        }
+
+        document.querySelector("#add-italic-button").addEventListener('click', addItalic);
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -541,4 +577,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddBulletedListButton();
     setupAddNumberedListButton();
     setupAddQuoteButton();
+    setupAddItalicButton();
 });
