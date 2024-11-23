@@ -512,6 +512,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#add-number-list-button").addEventListener('click', addNumberedList);
     }
 
+    let setupAddQuoteButton = () => {
+        function addQuote() {
+            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let character = editor.session.getLine(position.row).charAt(0);
+            if (character === ' ' || character === '>')
+                editor.session.insert(position, '>');
+            else
+                editor.session.insert(position, '> ');
+        }
+
+        document.querySelector("#add-quote-button").addEventListener('click', addQuote);
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -536,4 +549,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddHeadingButton();
     setupAddBulletedListButton();
     setupAddNumberedListButton();
+    setupAddQuoteButton();
 });
