@@ -576,6 +576,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    let setupAddStrikeButton = () => {
+        document.querySelector("#add-strike-button").addEventListener('click', () => {
+            addStyle('~', '~')
+        });
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -603,4 +609,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddQuoteButton();
     setupAddItalicButton();
     setupAddBoldButton();
+    setupAddStrikeButton();
 });
