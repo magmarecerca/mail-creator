@@ -16,8 +16,9 @@
 
 ## Styling text
 
-*This text will be italic*  
-_This will also be italic_
+**This text will be bold**
+
+_This will be italic_
 
 ~This text will have a strikethrough~
 
