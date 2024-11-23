@@ -486,6 +486,32 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#add-heading-button").addEventListener('click', addHeading);
     }
 
+    let setupAddBulletedListButton = () => {
+        function addBulletedList() {
+            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let character = editor.session.getLine(position.row).charAt(0);
+            if (character === ' ')
+                editor.session.insert(position, '-');
+            else if (character !== '-')
+                editor.session.insert(position, '- ');
+        }
+
+        document.querySelector("#add-bullet-list-button").addEventListener('click', addBulletedList);
+    }
+
+    let setupAddNumberedListButton = () => {
+        function addNumberedList() {
+            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let character = editor.session.getLine(position.row).charAt(0);
+            if (character === ' ')
+                editor.session.insert(position, '1.');
+            else
+                editor.session.insert(position, '1. ');
+        }
+
+        document.querySelector("#add-number-list-button").addEventListener('click', addNumberedList);
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -508,4 +534,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addGoogleDriveFile();
 
     setupAddHeadingButton();
+    setupAddBulletedListButton();
+    setupAddNumberedListButton();
 });
