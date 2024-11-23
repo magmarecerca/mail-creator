@@ -471,6 +471,21 @@ document.addEventListener("DOMContentLoaded", () => {
         exportButton.addEventListener('click', exportEmail);
     }
 
+    // ----- editor shortcuts -----
+
+    let setupAddHeadingButton = () => {
+        function addHeading() {
+            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let character = editor.session.getLine(position.row).charAt(0);
+            if (character === ' ' || character === '#')
+                editor.session.insert(position, '#');
+            else
+                editor.session.insert(position, '# ');
+        }
+
+        document.querySelector("#add-heading-button").addEventListener('click', addHeading);
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -489,6 +504,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTemplateLoad();
     setupExportButton();
 
-    addGoogleDriveImage()
-    addGoogleDriveFile()
+    addGoogleDriveImage();
+    addGoogleDriveFile();
+
+    setupAddHeadingButton();
 });
