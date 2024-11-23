@@ -175,26 +175,62 @@ document.addEventListener("DOMContentLoaded", () => {
         return url.match(/[-\w]{25,}/);
     }
 
-    let addGoogleDriveImage = () => {
+    function getDomainFromUrl(url) {
+        try {
+            const parsedUrl = new URL(url);
+            return parsedUrl.hostname;
+        } catch (error) {
+            console.error("Invalid URL:", error);
+            return null;
+        }
+    }
+
+    let addImageButton = () => {
+        function addGenericImage(imageUrl) {
+            editor.session.insert(editor.getCursorPosition(), `![Image](${imageUrl})`);
+        }
+
+        function addGoogleDriveImage(imageUrl) {
+            let id = getIdFromUrl(imageUrl)[0];
+            let url = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
+            addGenericImage(url);
+        }
+
         function addImage() {
-            let imageUrl = prompt("Please type the Google Drive image URL");
+            let imageUrl = prompt("Please insert the image URL.");
             if (imageUrl !== null) {
-                let id = getIdFromUrl(imageUrl)[0];
-                let url = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
-                editor.session.insert(editor.getCursorPosition(), `![Image](${url})`);
+                const domain = getDomainFromUrl(imageUrl);
+                if (domain === 'drive.google.com') {
+                    addGoogleDriveImage(imageUrl);
+                } else {
+                    addGenericImage(imageUrl);
+                }
             }
         }
 
         document.querySelector("#add-image-button").addEventListener('click', addImage);
     }
 
-    let addGoogleDriveFile = () => {
+    let addFileButton = () => {
+        function addGenericFile(fileUrl) {
+            editor.session.insert(editor.getCursorPosition(), `[<button> [Button Name] </button>](${fileUrl})`);
+        }
+
+        function addGoogleDriveFile(fileUrl) {
+            let id = getIdFromUrl(fileUrl)[0];
+            let url = `https://drive.google.com/uc?export=download&id=${id}`
+            addGenericFile(url);
+        }
+
         function addFile() {
-            let fileUrl = prompt("Please type the Google Drive file URL");
+            let fileUrl = prompt("Please insert the file URL");
             if (fileUrl !== null) {
-                let id = getIdFromUrl(fileUrl)[0];
-                let url = `https://drive.google.com/uc?export=download&id=${id}`
-                editor.session.insert(editor.getCursorPosition(), `[<button> [Button Name] </button>](${url})`);
+                const domain = getDomainFromUrl(fileUrl);
+                if (domain === 'drive.google.com') {
+                    addGoogleDriveFile(fileUrl);
+                } else {
+                    addGenericFile(fileUrl);
+                }
             }
         }
 
@@ -615,8 +651,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTemplateLoad();
     setupExportButton();
 
-    addGoogleDriveImage();
-    addGoogleDriveFile();
+    addImageButton();
+    addFileButton();
 
     setupAddHeadingButton();
     setupAddBulletedListButton();
