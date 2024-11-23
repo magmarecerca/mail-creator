@@ -582,6 +582,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    let setupAddUnderlineButton = () => {
+        document.querySelector("#add-underline-button").addEventListener('click', () => {
+            addStyle('<u>', '</u>')
+        });
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -610,4 +616,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddItalicButton();
     setupAddBoldButton();
     setupAddStrikeButton();
+    setupAddUnderlineButton();
 });
