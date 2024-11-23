@@ -96,24 +96,24 @@ header a:hover {
     font-size: 1.2em;
 }
 
-#menu-items .button {
+#menu-items button {
     margin-right: 5px;
 }
 
-.button {
+#menu-items button {
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 30px;
     padding: 0 7px;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1em;
+    font-family: inherit;
+    font-weight: inherit;
+    cursor: pointer;
 }
 
-.button a:hover {
-    text-decoration: none;
-}
-
-.button:hover {
+#menu-items button:hover {
     background-color: #343e4c;
 }
 
