@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let setupAddHeadingButton = () => {
         function addHeading() {
-            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let position = {row: editor.getCursorPosition().row, column: 0};
             let character = editor.session.getLine(position.row).charAt(0);
             if (character === ' ' || character === '#')
                 editor.session.insert(position, '#');
@@ -479,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let setupAddBulletedListButton = () => {
         function addBulletedList() {
-            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let position = {row: editor.getCursorPosition().row, column: 0};
             let character = editor.session.getLine(position.row).charAt(0);
             if (character === ' ')
                 editor.session.insert(position, '-');
@@ -492,7 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let setupAddNumberedListButton = () => {
         function addNumberedList() {
-            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let position = {row: editor.getCursorPosition().row, column: 0};
             let character = editor.session.getLine(position.row).charAt(0);
             if (character === ' ')
                 editor.session.insert(position, '1.');
@@ -505,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let setupAddQuoteButton = () => {
         function addQuote() {
-            let position = { row: editor.getCursorPosition().row, column: 0 };
+            let position = {row: editor.getCursorPosition().row, column: 0};
             let character = editor.session.getLine(position.row).charAt(0);
             if (character === ' ' || character === '>')
                 editor.session.insert(position, '>');
@@ -516,31 +516,55 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#add-quote-button").addEventListener('click', addQuote);
     }
 
-    function deleteCharacterAtPosition(row, column) {
-        let range = new ace.Range(row, column, row, column + 1);
+    function deleteCharacterAtPosition(row, column, length) {
+        let range = new ace.Range(row, column, row, column + length);
         editor.session.getDocument().remove(range);
     }
 
-    function addStyle(opening, closing){
+    function addStyle(opening, closing) {
         let range = editor.selection.getRange();
 
-        let lastCharacter = editor.session.getLine(range.end.row).charAt(range.end.column);
-        let beforeLastCharacter = editor.session.getLine(range.end.row).charAt(range.end.column - 1);
-        let firstCharacter = editor.session.getLine(range.start.row).charAt(range.start.column - 1);
-        let secondCharacter = editor.session.getLine(range.start.row).charAt(range.start.column);
+        function getStartStringExclusive() {
+            const firstCharacterLine = editor.session.getLine(range.start.row);
+            const startString = firstCharacterLine.substring(range.start.column - opening.length, range.start.column);
+            console.log(startString);
+            return startString === opening;
+        }
 
-        if (lastCharacter === opening && firstCharacter === closing) {
-            deleteCharacterAtPosition(range.end.row, range.end.column);
-            deleteCharacterAtPosition(range.start.row, range.start.column - 1);
-        }else if (beforeLastCharacter === opening && secondCharacter === closing) {
-            deleteCharacterAtPosition(range.end.row, range.end.column - 1);
-            deleteCharacterAtPosition(range.start.row, range.start.column);
-        }else{
+        function getEndStringExclusive() {
+            const lastCharacterLine = editor.session.getLine(range.end.row);
+            const closingString = lastCharacterLine.substring(range.end.column, range.end.column + closing.length);
+            console.log(closingString);
+            return closingString === closing;
+        }
+
+        function getStartStringInclusive() {
+            const firstCharacterLine = editor.session.getLine(range.start.row);
+            const startString = firstCharacterLine.substring(range.start.column, range.start.column + opening.length);
+            console.log(startString);
+            return startString === opening;
+        }
+
+        function getEndStringInclusive() {
+            const lastCharacterLine = editor.session.getLine(range.end.row);
+            const closingString = lastCharacterLine.substring(range.end.column - closing.length, range.end.column);
+            console.log(closingString);
+            return closingString === closing;
+        }
+
+        if (getStartStringExclusive() && getEndStringExclusive()) {
+            deleteCharacterAtPosition(range.end.row, range.end.column, closing.length);
+            deleteCharacterAtPosition(range.start.row, range.start.column - 1, opening.length);
+        } else if (getStartStringInclusive() && getEndStringInclusive()) {
+            deleteCharacterAtPosition(range.end.row, range.end.column - 1, closing.length);
+            deleteCharacterAtPosition(range.start.row, range.start.column, opening.length);
+        } else {
             editor.session.insert({row: range.end.row, column: range.end.column}, closing);
             editor.session.insert({row: range.start.row, column: range.start.column}, opening);
-            editor.selection.setRange(
-                {start: {row: range.start.row, column: range.start.column}, end: {row: range.end.row, column: range.end.column + 2}}
-            )
+            editor.selection.setRange({
+                start: {row: range.start.row, column: range.start.column},
+                end: {row: range.end.row, column: range.end.column + opening.length + closing.length}
+            })
         }
     }
 
