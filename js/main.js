@@ -206,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     addGenericImage(imageUrl);
                 }
             }
+            editor.focus();
         }
 
         document.querySelector("#add-image-button").addEventListener('click', addImage);
@@ -232,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     addGenericFile(fileUrl);
                 }
             }
+            editor.focus();
         }
 
         document.querySelector("#add-file-button").addEventListener('click', addFile);
@@ -508,6 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 editor.session.insert(position, '#');
             else
                 editor.session.insert(position, '# ');
+            editor.focus();
         }
 
         document.querySelector("#add-heading-button").addEventListener('click', addHeading);
@@ -521,6 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 editor.session.insert(position, '-');
             else if (character !== '-')
                 editor.session.insert(position, '- ');
+            editor.focus();
         }
 
         document.querySelector("#add-bullet-list-button").addEventListener('click', addBulletedList);
@@ -534,6 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 editor.session.insert(position, '1.');
             else
                 editor.session.insert(position, '1. ');
+            editor.focus();
         }
 
         document.querySelector("#add-number-list-button").addEventListener('click', addNumberedList);
@@ -547,6 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 editor.session.insert(position, '>');
             else
                 editor.session.insert(position, '> ');
+            editor.focus();
         }
 
         document.querySelector("#add-quote-button").addEventListener('click', addQuote);
@@ -596,31 +602,35 @@ document.addEventListener("DOMContentLoaded", () => {
             editor.selection.setRange({
                 start: {row: range.start.row, column: range.start.column},
                 end: {row: range.end.row, column: range.end.column + opening.length + closing.length}
-            })
+            });
         }
     }
 
     let setupAddItalicButton = () => {
         document.querySelector("#add-italic-button").addEventListener('click', () => {
-            addStyle('_', '_')
+            addStyle('_', '_');
+            editor.focus();
         });
     }
 
     let setupAddBoldButton = () => {
         document.querySelector("#add-bold-button").addEventListener('click', () => {
-            addStyle('**', '**')
+            addStyle('**', '**');
+            editor.focus();
         });
     }
 
     let setupAddStrikeButton = () => {
         document.querySelector("#add-strike-button").addEventListener('click', () => {
-            addStyle('~', '~')
+            addStyle('~', '~');
+            editor.focus();
         });
     }
 
     let setupAddUnderlineButton = () => {
         document.querySelector("#add-underline-button").addEventListener('click', () => {
-            addStyle('<u>', '</u>')
+            addStyle('<u>', '</u>');
+            editor.focus();
         });
     }
 
@@ -628,9 +638,36 @@ document.addEventListener("DOMContentLoaded", () => {
         function addSeparator() {
             let position = {row: editor.getCursorPosition().row, column: 0};
             editor.session.insert(position, '---\n');
+            editor.focus();
         }
 
         document.querySelector("#add-separator-button").addEventListener('click', addSeparator);
+    }
+
+    let setupAddLinkButton = () => {
+        function addLink() {
+            let range = editor.selection.getRange();
+
+            let link = prompt('Enter a link.');
+
+            if (link) {
+                console.log(range)
+                if (range.start.row === range.end.row && range.start.column === range.end.column) {
+                    editor.session.insert(editor.getCursorPosition(), `[${link}](${link})`);
+                    editor.focus();
+                }else{
+                    editor.session.insert(range.end, `](${link})`);
+                    editor.session.insert(range.start, `[`);
+                    editor.selection.setRange({
+                        start: {row: range.start.row, column: range.start.column},
+                        end: {row: range.end.row, column: range.end.column + `](${link})`.length + 1}
+                    });
+                    editor.focus();
+                }
+            }
+        }
+
+        document.querySelector("#add-link-button").addEventListener('click', addLink);
     }
 
     // ----- entry point -----
@@ -663,4 +700,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddStrikeButton();
     setupAddUnderlineButton();
     setupAddSeparatorButton();
+    setupAddLinkButton();
 });
