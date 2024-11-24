@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const row = editor.session.getLength() - 1;
             const column = editor.session.getLine(row).length;
             editor.moveCursorTo(row, column);
-            editor.scrollToLine(row, true, true, function () {});
             editor.focus();
             editor.navigateLineEnd();
         });
