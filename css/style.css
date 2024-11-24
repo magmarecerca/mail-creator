@@ -94,10 +94,17 @@ header a:hover {
 #menu-items {
     display: flex;
     font-size: 1.2em;
+    align-items: center;
+    gap: 8px;
 }
 
-#menu-items button {
-    margin-right: 5px;
+button:disabled {
+    opacity: 0.6;
+}
+
+button:disabled:hover {
+    background: none !important;
+    cursor: not-allowed !important;
 }
 
 #menu-items button {

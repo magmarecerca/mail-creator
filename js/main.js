@@ -31,6 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+    function updateToolbar() {
+        document.querySelector('#undo-button button').disabled = !editor.session.getUndoManager().hasUndo();
+        document.querySelector('#redo-button button').disabled = !editor.session.getUndoManager().hasRedo();
+    }
+
     let setupEditor = () => {
         let editor = ace.edit('editor');
         editor.getSession().setUseWrapMode(true);
@@ -52,6 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
             enableBasicAutocompletion: false,
             showFoldWidgets: false,
         });
+
+        editor.on('input', updateToolbar)
 
         const MarkdownMode = ace.require("ace/mode/markdown").Mode;
         editor.session.setMode(new MarkdownMode());
@@ -355,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(html => {
                 placeTemplate(html);
+                editor.session.getUndoManager().reset();
             });
     }
 
@@ -682,6 +690,24 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#add-link-button").addEventListener('click', addLink);
     }
 
+    // ----- undo/redo -----
+
+    let setupUndoButton = () => {
+        function undo() {
+            editor.undo();
+        }
+
+        document.querySelector("#undo-button").addEventListener('click', undo);
+    }
+
+    let setupRedoButton = () => {
+        function redo() {
+            editor.redo();
+        }
+
+        document.querySelector("#redo-button").addEventListener('click', redo);
+    }
+
     // ----- entry point -----
 
     setupMarked();
@@ -713,4 +739,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAddUnderlineButton();
     setupAddSeparatorButton();
     setupAddLinkButton();
+
+    setupUndoButton();
+    setupRedoButton();
 });
