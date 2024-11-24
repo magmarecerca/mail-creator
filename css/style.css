@@ -176,6 +176,7 @@ footer a {
 #editor-wrapper {
     height: 100%;
     background-color: #f9fafb;
+    cursor: text;
 }
 
 #preview {

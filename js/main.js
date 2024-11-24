@@ -66,6 +66,19 @@ document.addEventListener("DOMContentLoaded", () => {
             editContent(value);
         });
 
+        const editorWrapper = document.getElementById('editor-wrapper');
+        editorWrapper.addEventListener('click', (event) => {
+            if (event.target !== editorWrapper)
+                return;
+
+            const row = editor.session.getLength() - 1;
+            const column = editor.session.getLine(row).length;
+            editor.moveCursorTo(row, column);
+            editor.scrollToLine(row, true, true, function () {});
+            editor.focus();
+            editor.navigateLineEnd();
+        });
+
         return editor;
     };
 
