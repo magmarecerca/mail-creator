@@ -417,6 +417,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    let isPreviewing = false;
+    let setupPreviewButton = () => {
+        const previewer = document.getElementById('preview');
+        const editor = document.getElementById('edit');
+        const divider = document.getElementById('divider');
+
+        const button = document.getElementById('preview-button');
+
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!isPreviewing) {
+                isPreviewing = true;
+                previewer.style.flexBasis = '100%';
+                editor.style.display = 'none';
+                divider.style.display = 'none';
+                previewer.focus();
+
+                button.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+            }else{
+                isPreviewing = false;
+                previewer.style.flexBasis = '50%';
+                editor.style.flexBasis = '50%';
+                editor.style.display = '';
+                divider.style.display = '';
+
+                button.innerHTML = '<i class="fa-solid fa-eye"></i>';
+            }
+        })
+    }
+
     let editContent = (value) => {
         const wrapper = document.getElementById('preview');
         const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
@@ -742,4 +772,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setupUndoButton();
     setupRedoButton();
+
+    setupPreviewButton();
 });
