@@ -406,6 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
             iframeDoc.open();
             iframeDoc.write(template);
             iframeDoc.close();
+            addMarkdownStyling();
             editContent(ace.edit('editor').getValue())
 
             const edit = document.querySelector('#edit');
@@ -454,6 +455,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!iframeDoc || !iframeDoc.body || !iframeDoc.body.childNodes.length)
             return;
 
+        wrapper.contentWindow.document.getElementById('output').innerHTML = convert(value);
+    }
+
+    let addMarkdownStyling = () => {
+        const wrapper = document.getElementById('preview');
+        const iframeDoc = wrapper.contentDocument || wrapper.contentWindow.document;
+
+        if (!iframeDoc || !iframeDoc.body || !iframeDoc.body.childNodes.length)
+            return;
+
         let style = wrapper.contentWindow.document.querySelector("style");
         const defaultTemplate = 'css/markdown.css';
         fetch(defaultTemplate)
@@ -466,8 +477,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(css => {
                 style.innerHTML += css;
             });
-
-        wrapper.contentWindow.document.getElementById('output').innerHTML = convert(value);
     }
 
     // ----- divider resize ----
