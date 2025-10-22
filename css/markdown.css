@@ -58,13 +58,13 @@ h6 tt, h6 code {
 
 h1 {
     font-size: 28px;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #888888;
     color: black;
 }
 
 h2 {
     font-size: 24px;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #888888;
     color: black;
 }
 
@@ -95,7 +95,7 @@ h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
 
 hr {
     border: 0;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #888888;
 }
 
 ul li, ol li {
@@ -264,7 +264,7 @@ pre code {
 
 .highlight pre {
     background-color: #f8f8f8;
-    border: 1px solid #cccccc;
+    border: 1px solid #888888;
     font-size: 13px;
     line-height: 19px;
     overflow: auto;
@@ -274,7 +274,7 @@ pre code {
 
 pre {
     background-color: #f8f8f8;
-    border: 1px solid #cccccc;
+    border: 1px solid #888888;
     font-size: 0.90em !important;
     line-height: 1.6em !important;
     padding: 6px 10px;
