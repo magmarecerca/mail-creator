@@ -65,6 +65,12 @@ You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
 
 You can have one line here
 
+## Centered text
+
+<div style="text-align: center;">
+This text is centered.
+</div>
+
 ---
 
 And another after the separator
