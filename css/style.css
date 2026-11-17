@@ -47,7 +47,7 @@ img {
 }
 
 header {
-    background-color: #3B4757;
+    background-color: #232326;
     font-size: 12px;
     color: #fff;
     width: 100%;
@@ -72,8 +72,9 @@ header {
 }
 
 .tool-items button:hover,
-.info button:hover {
-    background-color: #00000020;
+.info button:hover,
+#menu-items button:hover {
+    background-color: #00000040;
 }
 
 header > div {
@@ -120,10 +121,6 @@ button:disabled:hover {
     cursor: pointer;
 }
 
-#menu-items button:hover {
-    background-color: #343e4c;
-}
-
 #sync-button {
     margin-left: 16px;
     -webkit-user-select: none;
@@ -142,7 +139,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #3B4757;
+    background-color: #232326;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -165,15 +162,29 @@ footer a {
     background-color: #fff;
     border-bottom: 1px solid #e8e8e8;
     display: flex;
+    padding: 24px 0;
 }
 
 .column {
     overflow-y: scroll;
     flex-basis: 50%;
     padding: 0;
-    margin: 0;
     white-space: nowrap;
     vertical-align: top;
+
+    /*padding: 24px;*/
+    border-radius: 16px;
+    border-width: 2px;
+    border-color: #efecea;
+    border-style: solid;
+    margin: 0 12px;
+}
+
+#edit {
+    margin-left: 24px;
+}
+#preview {
+    margin-right: 24px;
 }
 
 #editor {
@@ -188,7 +199,6 @@ footer a {
 
 #preview {
     white-space: normal;
-    border: none;
 }
 
 #divider {
